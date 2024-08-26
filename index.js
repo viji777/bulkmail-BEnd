@@ -2,11 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose")
+require('dotenv').config()
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://viji:123@cluster1.zh3tah9.mongodb.net/passkey").then(function () {
+const port =process.env.PORT
+
+mongoose.connect(process.env.MONGO_URL).then(function () {
     console.log("DB Connected")
 }).catch(function () {
     console.log("Fail to Connect DB")
@@ -66,6 +69,6 @@ app.post("/sendemail", function (req, res) {
 
 
 
-app.listen(5000, function () {
+app.listen(port, function () {
     console.log("Server Started....")
 })
